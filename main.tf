@@ -15,7 +15,7 @@ module "kops_metadata" {
 
 resource "aws_iam_role" "default" {
   name        = "${module.label.id}"
-  description = "Role that can be assumed by external-dns"
+  description = "Role that can be assumed by cert-manager"
 
   lifecycle {
     create_before_destroy = true
@@ -59,7 +59,7 @@ resource "aws_iam_role_policy_attachment" "default" {
 
 resource "aws_iam_policy" "default" {
   name        = "${module.label.id}"
-  description = "Grant permissions for external-dns"
+  description = "Grant permissions for cert-manager"
   policy      = "${data.aws_iam_policy_document.default.json}"
 }
 
@@ -89,13 +89,26 @@ data "aws_iam_policy_document" "default" {
 
     actions = [
       "route53:ListHostedZones",
-      "route53:ListResourceRecordSets",
     ]
 
     effect = "Allow"
 
     resources = [
       "*",
+    ]
+  }
+
+  statement {
+    sid = "GrantGetChangesToDomains"
+
+    actions = [
+      "route53:GetChange",
+    ]
+
+    effect = "Allow"
+
+    resources = [
+      "arn:aws:route53:::change/*",
     ]
   }
 }

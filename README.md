@@ -3,15 +3,15 @@
 
 [![Cloud Posse][logo]](https://cpco.io/homepage)
 
-# terraform-aws-kops-external-dns [![Build Status](https://travis-ci.org/cloudposse/terraform-aws-kops-external-dns.svg?branch=master)](https://travis-ci.org/cloudposse/terraform-aws-kops-external-dns) [![Latest Release](https://img.shields.io/github/release/cloudposse/terraform-aws-kops-external-dns.svg)](https://github.com/cloudposse/terraform-aws-kops-external-dns/releases/latest) [![Slack Community](https://slack.cloudposse.com/badge.svg)](https://slack.cloudposse.com)
+# terraform-aws-kops-cert-manager [![Build Status](https://travis-ci.org/kustless/terraform-aws-kops-cert-manager.svg?branch=master)](https://travis-ci.org/kustless/terraform-aws-kops-cert-manager) [![Latest Release](https://img.shields.io/github/release/kustless/terraform-aws-kops-cert-manager.svg)](https://github.com/kustless/terraform-aws-kops-cert-manager/releases/latest)
 
 
-Terraform module to provision an IAM role for `external-dns` running in a Kops cluster, and attach an IAM policy to the role with permissions to modify Route53 record sets.
+Terraform module to provision an IAM role for `cert-manager` running in a Kops cluster, and attach an IAM policy to the role with permissions to modify Route53 record sets.
 
 
 ## Overview
 
-This module assumes you are running [external-dns](https://github.com/kubernetes-incubator/external-dns) in a Kops cluster.
+This module assumes you are running [cert-manager](https://github.com/jetstack/cert-manager/) in a Kops cluster.
 
 It will provision an IAM role with the required permissions and grant the Kops masters the permission to assume it.
 
@@ -53,12 +53,17 @@ We literally have [*hundreds of terraform modules*][terraform_modules] that are 
 
 ## Usage
 
+
+**IMPORTANT:** The `master` branch is used in `source` just as an example. In your code, do not pin to `master` because there may be breaking changes between releases.
+Instead pin to the release tag (e.g. `?ref=tags/x.y.z`) of one of our [latest releases](https://github.com/terraless/terraform-aws-kops-cert-manager/releases).
+
+
 ```hcl
 module "kops_external_dns" {
-  source         = "git::https://github.com/cloudposse/terraform-aws-kops-external-dns.git?ref=tags/<release-tag>"
+  source         = "git::https://github.com/kustless/terraform-aws-kops-cert-manager.git?ref=tags/<release-tag>"
   namespace      = "cp"
   stage          = "prod"
-  name           = "external-dns"
+  name           = "cert-manager"
   cluster_name   = "us-east-1.cloudposse.co"
   dns_zone_names = ["us-east-1.cloudposse.co", "cloudposse.co"]
   masters_name   = "masters"
@@ -116,7 +121,7 @@ Available targets:
 
 ## Share the Love 
 
-Like this project? Please give it a ★ on [our GitHub](https://github.com/cloudposse/terraform-aws-kops-external-dns)! (it helps us **a lot**) 
+Like this project? Please give it a ★ on [our GitHub](https://github.com/terraless/terraform-aws-kops-cert-manager)! (it helps us **a lot**) 
 
 Are you using this project or any of our other projects? Consider [leaving a testimonial][testimonial]. =)
 
@@ -139,7 +144,7 @@ Check out these related projects.
 
 **Got a question?**
 
-File a GitHub [issue](https://github.com/cloudposse/terraform-aws-kops-external-dns/issues), send us an [email][email] or join our [Slack Community][slack].
+File a GitHub [issue](https://github.com/terraless/terraform-aws-kops-cert-manager/issues), send us an [email][email] or join our [Slack Community][slack].
 
 [![README Commercial Support][readme_commercial_support_img]][readme_commercial_support_link]
 
@@ -178,7 +183,7 @@ Signup for [our newsletter][newsletter] that covers everything on our technology
 
 ### Bug Reports & Feature Requests
 
-Please use the [issue tracker](https://github.com/cloudposse/terraform-aws-kops-external-dns/issues) to report any bugs or file feature requests.
+Please use the [issue tracker](https://github.com/terraless/terraform-aws-kops-cert-manager/issues) to report any bugs or file feature requests.
 
 ### Developing
 
@@ -252,13 +257,11 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
 
 ### Contributors
 
-|  [![Igor Rodionov][goruha_avatar]][goruha_homepage]<br/>[Igor Rodionov][goruha_homepage] | [![Andriy Knysh][aknysh_avatar]][aknysh_homepage]<br/>[Andriy Knysh][aknysh_homepage] |
-|---|---|
+|  [![Yujun Zhang][yujunz_avatar]][yujunz_homepage]<br/>[Yujun Zhang][yujunz_homepage] |
+|---|
 
-  [goruha_homepage]: https://github.com/goruha
-  [goruha_avatar]: https://github.com/goruha.png?size=150
-  [aknysh_homepage]: https://github.com/aknysh
-  [aknysh_avatar]: https://github.com/aknysh.png?size=150
+  [yujunz_homepage]: https://github.com/yujunz
+  [yujunz_avatar]: https://github.com/yujunz.png?size=150
 
 
 
@@ -281,16 +284,16 @@ Check out [our other projects][github], [follow us on twitter][twitter], [apply 
   [we_love_open_source]: https://cpco.io/we-love-open-source
   [module_development]: https://cpco.io/module-development
   [terraform_modules]: https://cpco.io/terraform-modules
-  [readme_header_img]: https://cloudposse.com/readme/header/img?repo=cloudposse/terraform-aws-kops-external-dns
-  [readme_header_link]: https://cloudposse.com/readme/header/link?repo=cloudposse/terraform-aws-kops-external-dns
-  [readme_footer_img]: https://cloudposse.com/readme/footer/img?repo=cloudposse/terraform-aws-kops-external-dns
-  [readme_footer_link]: https://cloudposse.com/readme/footer/link?repo=cloudposse/terraform-aws-kops-external-dns
-  [readme_commercial_support_img]: https://cloudposse.com/readme/commercial-support/img?repo=cloudposse/terraform-aws-kops-external-dns
-  [readme_commercial_support_link]: https://cloudposse.com/readme/commercial-support/link?repo=cloudposse/terraform-aws-kops-external-dns
-  [share_twitter]: https://twitter.com/intent/tweet/?text=terraform-aws-kops-external-dns&url=https://github.com/cloudposse/terraform-aws-kops-external-dns
-  [share_linkedin]: https://www.linkedin.com/shareArticle?mini=true&title=terraform-aws-kops-external-dns&url=https://github.com/cloudposse/terraform-aws-kops-external-dns
-  [share_reddit]: https://reddit.com/submit/?url=https://github.com/cloudposse/terraform-aws-kops-external-dns
-  [share_facebook]: https://facebook.com/sharer/sharer.php?u=https://github.com/cloudposse/terraform-aws-kops-external-dns
-  [share_googleplus]: https://plus.google.com/share?url=https://github.com/cloudposse/terraform-aws-kops-external-dns
-  [share_email]: mailto:?subject=terraform-aws-kops-external-dns&body=https://github.com/cloudposse/terraform-aws-kops-external-dns
-  [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/cloudposse/terraform-aws-kops-external-dns?pixel&cs=github&cm=readme&an=terraform-aws-kops-external-dns
+  [readme_header_img]: https://cloudposse.com/readme/header/img?repo=terraless/terraform-aws-kops-cert-manager
+  [readme_header_link]: https://cloudposse.com/readme/header/link?repo=terraless/terraform-aws-kops-cert-manager
+  [readme_footer_img]: https://cloudposse.com/readme/footer/img?repo=terraless/terraform-aws-kops-cert-manager
+  [readme_footer_link]: https://cloudposse.com/readme/footer/link?repo=terraless/terraform-aws-kops-cert-manager
+  [readme_commercial_support_img]: https://cloudposse.com/readme/commercial-support/img?repo=terraless/terraform-aws-kops-cert-manager
+  [readme_commercial_support_link]: https://cloudposse.com/readme/commercial-support/link?repo=terraless/terraform-aws-kops-cert-manager
+  [share_twitter]: https://twitter.com/intent/tweet/?text=terraform-aws-kops-cert-manager&url=https://github.com/terraless/terraform-aws-kops-cert-manager
+  [share_linkedin]: https://www.linkedin.com/shareArticle?mini=true&title=terraform-aws-kops-cert-manager&url=https://github.com/terraless/terraform-aws-kops-cert-manager
+  [share_reddit]: https://reddit.com/submit/?url=https://github.com/terraless/terraform-aws-kops-cert-manager
+  [share_facebook]: https://facebook.com/sharer/sharer.php?u=https://github.com/terraless/terraform-aws-kops-cert-manager
+  [share_googleplus]: https://plus.google.com/share?url=https://github.com/terraless/terraform-aws-kops-cert-manager
+  [share_email]: mailto:?subject=terraform-aws-kops-cert-manager&body=https://github.com/terraless/terraform-aws-kops-cert-manager
+  [beacon]: https://ga-beacon.cloudposse.com/UA-76589703-4/terraless/terraform-aws-kops-cert-manager?pixel&cs=github&cm=readme&an=terraform-aws-kops-cert-manager

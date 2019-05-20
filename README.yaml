@@ -5,7 +5,7 @@
 #
 
 # Name of this project
-name: terraform-aws-kops-external-dns
+name: terraform-aws-kops-cert-manager
 
 # Tags of this project
 tags:
@@ -15,7 +15,7 @@ tags:
   - kops-kubernetes
   - kops
   - kubernetes
-  - external-dns
+  - cert-manager
   - route53
   - iam-policy
   - iam-role
@@ -31,19 +31,16 @@ categories:
 license: "APACHE2"
 
 # Canonical GitHub repo
-github_repo: cloudposse/terraform-aws-kops-external-dns
+github_repo: terraless/terraform-aws-kops-cert-manager
 
 # Badges to display
 badges:
   - name: "Build Status"
-    image: "https://travis-ci.org/cloudposse/terraform-aws-kops-external-dns.svg?branch=master"
-    url: "https://travis-ci.org/cloudposse/terraform-aws-kops-external-dns"
+    image: "https://travis-ci.org/kustless/terraform-aws-kops-cert-manager.svg?branch=master"
+    url: "https://travis-ci.org/kustless/terraform-aws-kops-cert-manager"
   - name: "Latest Release"
-    image: "https://img.shields.io/github/release/cloudposse/terraform-aws-kops-external-dns.svg"
-    url: "https://github.com/cloudposse/terraform-aws-kops-external-dns/releases/latest"
-  - name: "Slack Community"
-    image: "https://slack.cloudposse.com/badge.svg"
-    url: "https://slack.cloudposse.com"
+    image: "https://img.shields.io/github/release/kustless/terraform-aws-kops-cert-manager.svg"
+    url: "https://github.com/kustless/terraform-aws-kops-cert-manager/releases/latest"
 
 related:
   - name: "terraform-aws-kops-metadata"
@@ -70,12 +67,12 @@ related:
 
 # Short description of this project
 description: |-
-  Terraform module to provision an IAM role for `external-dns` running in a Kops cluster, and attach an IAM policy to the role with permissions to modify Route53 record sets.
+  Terraform module to provision an IAM role for `cert-manager` running in a Kops cluster, and attach an IAM policy to the role with permissions to modify Route53 record sets.
 
 
   ## Overview
 
-  This module assumes you are running [external-dns](https://github.com/kubernetes-incubator/external-dns) in a Kops cluster.
+  This module assumes you are running [cert-manager](https://github.com/jetstack/cert-manager/) in a Kops cluster.
 
   It will provision an IAM role with the required permissions and grant the Kops masters the permission to assume it.
 
@@ -88,10 +85,10 @@ description: |-
 usage: |-
   ```hcl
   module "kops_external_dns" {
-    source         = "git::https://github.com/cloudposse/terraform-aws-kops-external-dns.git?ref=tags/<release-tag>"
+    source         = "git::https://github.com/kustless/terraform-aws-kops-cert-manager.git?ref=tags/<release-tag>"
     namespace      = "cp"
     stage          = "prod"
-    name           = "external-dns"
+    name           = "cert-manager"
     cluster_name   = "us-east-1.cloudposse.co"
     dns_zone_names = ["us-east-1.cloudposse.co", "cloudposse.co"]
     masters_name   = "masters"
@@ -109,7 +106,5 @@ include:
 
 # Contributors to this project
 contributors:
-  - name: "Igor Rodionov"
-    github: "goruha"
-  - name: "Andriy Knysh"
-    github: "aknysh"
+  - name: "Yujun Zhang"
+    github: "yujunz"
